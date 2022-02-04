@@ -19,7 +19,7 @@ body {
     font-family: 'Short Stack', cursive;
 }
 .paper {
-    background: #fff;
+    background: rgb(255, 255, 255);
     box-shadow:
       /* The top layer shadow */
       0 1px 1px rgba(0,0,0,0.15),
@@ -50,6 +50,8 @@ body {
 
   li {
       position: relative !important;
+      font-weight: 100
+      ;
   }
   li span {
       position: absolute !important;
@@ -58,6 +60,12 @@ body {
 
   .trash{
       display: none;
+  }
+
+  li span:hover,
+  .trash:hover {
+      color: red;
+      cursor: pointer;
   }
 
   li:hover .trash {
