@@ -25,12 +25,29 @@ export const Todo = () => {
 								}
 							}}
 						/>
-						<ul className="list-group py-2">
+						<ul
+							className="list-group py-2"
+							onClick={(e) => {
+								if (
+									e.target.nodeName == "I" ||
+									e.target.nodeName == "SPAN"
+								) {
+									setListItem(
+										[...listItems].filter(
+											(item) =>
+												!(item =
+													e.target.parentElement
+														.parentElement
+														.innerText == item)
+										)
+									);
+								}
+							}}>
 							{listItems.map((task) => (
 								<li className="list-group-item">
 									{task}
 									<span className="trash">
-										<i class="far fa-trash-alt"></i>
+										<i className="far fa-trash-alt"></i>
 									</span>
 								</li>
 							))}
