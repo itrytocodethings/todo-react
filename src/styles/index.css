@@ -47,6 +47,9 @@ body {
       border: none !important;
       border-bottom: 1px solid lightgrey !important;
   }
+  .list-group-item:first-of-type {
+      border-top: 1px solid lightgrey !important;
+  }
 
   li {
       position: relative !important;
@@ -70,4 +73,8 @@ body {
 
   li:hover .trash {
       display: inline-block;
+  }
+
+  .count {
+      font-size: .7rem;
   }
