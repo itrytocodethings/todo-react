@@ -37,10 +37,10 @@ export const Todo = () => {
 						<ul className="list-group py-2" onClick={removeTask}>
 							{listItems.length > 0 ? (
 								listItems.map((task, i) => (
-									<Task id={i} task={task} />
+									<Task key={i} id={i} task={task} />
 								))
 							) : (
-								<small className="text-muted">
+								<small className="text-muted text-center">
 									<em>no tasks</em> &#128546;
 								</small>
 							)}
@@ -49,13 +49,13 @@ export const Todo = () => {
 							{listItems.length > 0 ? (
 								<small className="count text-muted">
 									<em>
-										{listItems.length}{" "}
-										{listItems.length > 1
-											? `items`
-											: `item`}{" "}
-										left
-									</em>{" "}
-									&#128521;
+										{`${listItems.length} ${
+											listItems.length > 1
+												? `items`
+												: `item`
+										} left `}
+									</em>
+									<span>&#128521;</span>
 								</small>
 							) : null}
 						</div>
