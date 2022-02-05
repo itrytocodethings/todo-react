@@ -4,12 +4,25 @@ export const Todo = () => {
 	const [todoVal, setTodoVal] = useState("");
 	const [listItems, setListItem] = useState([]);
 
+	const addTask = (e) => {
+		if (e.keyCode == 13) {
+			setListItem([...listItems, todoVal.trim()]);
+			setTodoVal("");
+		}
+	};
+	const removeTask = (e) => {
+		if (e.target.nodeName == "I") {
+			listItems.splice(e.target.parentElement.parentElement.id, 1);
+			setListItem([...listItems]);
+		}
+	};
+
 	return (
 		<div>
 			<h1 className="display-1 text-center">todo</h1>
 			<div className="row mt-3">
-				<div className="col-12 col-sm-3 mx-auto">
-					<div className="todo paper pb-0 px-1">
+				<div className="col-12 col-sm-6 mx-auto">
+					<div className="todo paper pb-0 px-3">
 						<input
 							className="form-control"
 							type="text"
@@ -18,24 +31,9 @@ export const Todo = () => {
 							placeholder="What needs to be done?"
 							value={todoVal}
 							onChange={(e) => setTodoVal(e.target.value)}
-							onKeyUp={(e) => {
-								if (e.keyCode == 13) {
-									setListItem([...listItems, todoVal.trim()]);
-									setTodoVal("");
-								}
-							}}
+							onKeyUp={addTask}
 						/>
-						<ul
-							className="list-group py-2"
-							onClick={(e) => {
-								if (e.target.nodeName == "I") {
-									listItems.splice(
-										e.target.parentElement.parentElement.id,
-										1
-									);
-									setListItem([...listItems]);
-								}
-							}}>
+						<ul className="list-group py-2" onClick={removeTask}>
 							{listItems.length > 0 ? (
 								listItems.map((task, i) => (
 									<li

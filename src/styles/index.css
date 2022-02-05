@@ -12,9 +12,7 @@
 */
 
 body {
-    background-color: #ffffff;
-    background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-dark.png");
-    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+    background-color: #fefae0;
     font-family: 'Grand Hotel', cursive;
     font-family: 'Short Stack', cursive;
 }
