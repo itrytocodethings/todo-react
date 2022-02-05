@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Task } from "./task";
 
 export const Todo = () => {
 	const [todoVal, setTodoVal] = useState("");
@@ -36,15 +37,7 @@ export const Todo = () => {
 						<ul className="list-group py-2" onClick={removeTask}>
 							{listItems.length > 0 ? (
 								listItems.map((task, i) => (
-									<li
-										key={i}
-										id={i}
-										className="list-group-item">
-										{task}
-										<span className="trash">
-											<i className="far fa-trash-alt"></i>
-										</span>
-									</li>
+									<Task id={i} task={task} />
 								))
 							) : (
 								<small className="text-muted">
