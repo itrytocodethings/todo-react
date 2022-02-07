@@ -6,7 +6,7 @@ export const Todo = () => {
 	const [listItems, setListItem] = useState([]);
 
 	const addTask = (e) => {
-		if (e.keyCode == 13) {
+		if (e.keyCode == 13 && todoVal != "" && !/^\s*$/.test(todoVal)) {
 			setListItem([...listItems, todoVal.trim()]);
 			setTodoVal("");
 		}
