@@ -76,3 +76,8 @@ body {
   .count {
       font-size: .7rem;
   }
+
+  .marked {
+      color: lightgrey !important;
+      text-decoration: line-through;
+  }

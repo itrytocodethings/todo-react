@@ -7,13 +7,24 @@ export const Todo = () => {
 
 	const addTask = (e) => {
 		if (e.keyCode == 13 && todoVal != "" && !/^\s*$/.test(todoVal)) {
-			setListItem([...listItems, todoVal.trim()]);
+			let taskObj = {
+				task: todoVal.trim(),
+				isMarked: false,
+			};
+			setListItem([...listItems, taskObj]);
 			setTodoVal("");
 		}
 	};
-	const removeTask = (e) => {
+	const removeOrMarkTask = (e) => {
 		if (e.target.nodeName == "I") {
 			listItems.splice(e.target.parentElement.parentElement.id, 1);
+			setListItem([...listItems]);
+		}
+
+		if (e.target.nodeName == "LI") {
+			let li = listItems[e.target.id];
+			if (li.isMarked) li.isMarked = false;
+			else li.isMarked = true;
 			setListItem([...listItems]);
 		}
 	};
@@ -34,10 +45,17 @@ export const Todo = () => {
 							onChange={(e) => setTodoVal(e.target.value)}
 							onKeyUp={addTask}
 						/>
-						<ul className="list-group py-2" onClick={removeTask}>
+						<ul
+							className="list-group py-2"
+							onClick={removeOrMarkTask}>
 							{listItems.length > 0 ? (
 								listItems.map((task, i) => (
-									<Task key={i} id={i} task={task} />
+									<Task
+										key={i}
+										id={i}
+										task={task}
+										marked={task.isMarked}
+									/>
 								))
 							) : (
 								<small className="text-muted text-center">
