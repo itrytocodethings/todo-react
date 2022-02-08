@@ -81,3 +81,8 @@ body {
       color: lightgrey !important;
       text-decoration: line-through;
   }
+
+  .marked:hover,
+  li:hover {
+      cursor: pointer;
+  }
