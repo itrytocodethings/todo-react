@@ -80,6 +80,9 @@ export const Todo = () => {
 					</div>
 				</div>
 			</div>
+			{/* <small className="text-muted text-center d-block mt-3">
+				{todoVal}
+			</small> */}
 		</div>
 	);
 };
