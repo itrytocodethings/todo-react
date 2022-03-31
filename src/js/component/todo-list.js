@@ -1,33 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Task } from "./task";
 
 export const Todo = () => {
 	const [todoVal, setTodoVal] = useState("");
 	const [listItems, setListItem] = useState([]);
-
+	const getTasks = () => {
+		fetch(
+			"https://3000-itrytocodething-flaskmys-r6fxst6sr92.ws-us38.gitpod.io/todos"
+		)
+			.then((resp) => (resp.ok ? resp.json() : new Error("help")))
+			.then((resp) => setListItem(resp))
+			.catch((e) => console.log(e, "help"));
+	};
 	const addTask = (e) => {
 		if (e.keyCode == 13 && todoVal != "" && !/^\s*$/.test(todoVal)) {
 			let taskObj = {
-				task: todoVal.trim(),
-				isMarked: false,
+				label: todoVal.trim(),
 			};
-			setListItem([...listItems, taskObj]);
+			console.log(JSON.stringify(taskObj));
+			fetch(
+				"https://3000-itrytocodething-flaskmys-r6fxst6sr92.ws-us38.gitpod.io/todos",
+				{
+					method: "POST",
+					body: JSON.stringify(taskObj),
+					headers: {
+						"Content-type": "application/json",
+					},
+				}
+			)
+				.then((resp) => {
+					if (resp.ok) {
+						return resp.json();
+					}
+				})
+				.then((resp) => setListItem(resp))
+				.catch((e) => console.log(e, "help me"));
 			setTodoVal("");
 		}
 	};
-	const removeOrMarkTask = (e) => {
+	const removeTask = (e) => {
+		let taskID = e.target.parentElement.parentElement.id;
 		if (e.target.nodeName == "I") {
-			listItems.splice(e.target.parentElement.parentElement.id, 1);
-			setListItem([...listItems]);
-		}
-
-		if (e.target.nodeName == "LI") {
-			let li = listItems[e.target.id];
-			if (li.isMarked) li.isMarked = false;
-			else li.isMarked = true;
-			setListItem([...listItems]);
+			fetch(
+				`https://3000-itrytocodething-flaskmys-r6fxst6sr92.ws-us38.gitpod.io/todo/${taskID}`,
+				{
+					method: "DELETE",
+				}
+			)
+				.then((resp) => {
+					if (resp.ok) return resp.json();
+				})
+				.then((resp) => setListItem(resp));
 		}
 	};
+	const markDone = (task) => {
+		let isDone = task.done ? false : true;
+		console.log(task);
+		console.log(task.id);
+		fetch(
+			`https://3000-itrytocodething-flaskmys-r6fxst6sr92.ws-us38.gitpod.io/todo/${task.id}`,
+			{
+				method: "PUT",
+				body: JSON.stringify({ done: isDone }),
+				headers: {
+					"Content-type": "application/json",
+				},
+			}
+		)
+			.then((resp) => (resp.ok ? resp.json() : new Error("help")))
+			.then((resp) => setListItem(resp))
+			.catch((e) => console.log(e));
+	};
+	useEffect(() => {
+		getTasks();
+	}, []);
+	console.log(listItems);
 
 	return (
 		<div>
@@ -45,16 +92,16 @@ export const Todo = () => {
 							onChange={(e) => setTodoVal(e.target.value)}
 							onKeyUp={addTask}
 						/>
-						<ul
-							className="list-group py-2"
-							onClick={removeOrMarkTask}>
+						<ul className="list-group py-2" onClick={removeTask}>
 							{listItems.length > 0 ? (
-								listItems.map((task, i) => (
+								listItems.map((todo, i) => (
 									<Task
-										key={i}
-										id={i}
-										task={task}
-										marked={task.isMarked}
+										label={todo.label}
+										index={i}
+										done={todo.done}
+										id={todo.id}
+										task={todo}
+										markDone={markDone}
 									/>
 								))
 							) : (
