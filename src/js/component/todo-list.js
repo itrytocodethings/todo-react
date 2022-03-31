@@ -17,7 +17,6 @@ export const Todo = () => {
 			let taskObj = {
 				label: todoVal.trim(),
 			};
-			console.log(JSON.stringify(taskObj));
 			fetch(
 				"https://3000-itrytocodething-flaskmys-r6fxst6sr92.ws-us38.gitpod.io/todos",
 				{
